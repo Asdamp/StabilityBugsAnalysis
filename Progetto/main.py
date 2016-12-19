@@ -1,5 +1,6 @@
 import openpyxl
 from openpyxl import Workbook
+from openpyxl import load_workbook
 
 from Progetto import parserGetAllClasses
 from Progetto.diffClassiVersioni import diff
@@ -20,7 +21,7 @@ numClassiEliminate=diff(classiVerPrec,classiVerSucc)
 numClassiAggiunte=diff(classiVerSucc,classiVerPrec)
 numClassiModificate=count_class_mod(pathSourceVerPrec,pathSourceVerSucc)
 
-wb=Workbook()
+wb=load_workbook("result.xlsx")
 
 ws=wb.active
 

@@ -6,5 +6,5 @@ def diff(first, second):
     l = list(chain(*result))
     return len(l)
 
-result=diff(parserGetAllClasses.parse("C:\\Users\\Antonio\\Desktop\\t\\wildfly9"), parserGetAllClasses.parse("C:\\Users\\Antonio\\Desktop\\t\\wildfly10"))
-print(result)
+#result=diff(parserGetAllClasses.parse("C:\\Users\\Antonio\\Desktop\\t\\wildfly9"), parserGetAllClasses.parse("C:\\Users\\Antonio\\Desktop\\t\\wildfly10"))
+#print(result)

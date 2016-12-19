@@ -41,6 +41,6 @@ def recdircmp(dcmp):
         len+=recdircmp(sub_dcmp)
     return dcmp.diff_files.__len__() + len
 
-path="C:\\Users\\Antonio\\Desktop\\t\\wildfly-9.0.1.Final"
-path2="C:\\Users\\Antonio\\Desktop\\t\\wildfly-10.1.0.Final"
-print(count_class_mod(path, path2))
+#path="C:\\Users\\Antonio\\Desktop\\t\\wildfly-9.0.1.Final"
+#path2="C:\\Users\\Antonio\\Desktop\\t\\wildfly-10.1.0.Final"
+#print(count_class_mod(path, path2))
