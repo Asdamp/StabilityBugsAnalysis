@@ -51,17 +51,31 @@ def getAllVersions(response):
 #stampa il numero di bug divisi in tre categorie
 def parserNumIssue(response):
     info=response.split(",")
+    print(response)
+    fixed=""
+    affected=""
+    custom=""
     for item in info:
         issueFixed=re.search('\'issuesFixedCount\': [0-9]*',item)
         if issueFixed!=None:
-            print(issueFixed.group())
+            fixed=issueFixed.group().strip("'issuesFixedCount': ")
         issuesAffected=re.search('\'issuesAffectedCount\': [0-9]*',item)
         if issuesAffected!=None:
-            print(issuesAffected.group())
+            affected=(issuesAffected.group().strip("\'issuesAffectedCount\': "))
         issueC= re.search('\'issueCountWithCustomFieldsShowingVersion\': [0-9]*',item)
         if issueC!=None:
-            print(issueC.group())
+            custom=(issueC.group().strip("'issueCountWithCustomFieldsShowingVersion': "))
+    return [fixed, affected, custom]
 
-#parserNumIssue("{u'self': u'https://hibernate.atlassian.net/rest/api/2/version/26103', u'issuesFixedCount': 18, u'issuesAffectedCount': 0, u'issueCountWithCustomFieldsShowingVersion': 0}")
+def parseUnresolvedIssue(response):
+    info=response.split(",")
+    print(response)
+    unresolved=""
+    for item in info:
+        issueUnresolved = re.search('\'issuesUnresolvedCount\': [0-9]*', item)
+        if issueUnresolved != None:
+            unresolved = issueUnresolved.group().strip("\'issuesUnresolvedCount\':  ")
+    return unresolved
+# parserNumIssue("{u'self': u'https://hibernate.atlassian.net/rest/api/2/version/26103', u'issuesFixedCount': 18, u'issuesAffectedCount': 0, u'issueCountWithCustomFieldsShowingVersion': 0}")
 
 

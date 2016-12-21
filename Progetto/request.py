@@ -9,10 +9,18 @@ def getNumIssue(projectName,versionName):
            print(v.name+"\t"+v.self+"\t"+v.id)
            url=v.self
 
-
     #una volta trovato l'id o l'url completa dal getversions richiedo tutte le issue relative a quella versione
     r = requests.get(url+"/relatedIssueCounts")
-    parserVersionJira.parserNumIssue(str(r.json()))
+    result=parserVersionJira.parserNumIssue(str(r.json()))
+    print(result)
+    #result e' un array contenente il numero di issue chisue le issue affected e quele with custom fied
 
-getNumIssue("https://hibernate.atlassian.net/rest/api/2/project/HHH","5.2.5")
+    #faccio una nuova richiesta per ottenere tutte le issue unresolved per quella versione
+    r = requests.get(url + "/unresolvedIssueCount")
+    unresolved=parserVersionJira.parseUnresolvedIssue(str(r.json()))
+    print(unresolved)
+    result.append(unresolved)
+    return(result)
+
+#print(getNumIssue("https://hibernate.atlassian.net/rest/api/2/project/HHH","5.2.5"))
 
