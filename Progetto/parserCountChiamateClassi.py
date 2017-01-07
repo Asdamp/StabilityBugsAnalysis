@@ -42,10 +42,11 @@ def getDotFiles(path):
                 if tmp:
                     assNodes.append(tmp)
         nodoChiamaList=getChiamate(nodoChiamaList,nodeToPackage,assNodes)
-        printParsedDot(nodeToPackage, assNodes)
+        #printParsedDot(nodeToPackage, assNodes)
     for item in nodoChiamaList:
        print(item)
+    print("*************")
     return nodoChiamaList
 
-list= getDotFiles("C:\\Users\\Assunta\\Desktop\\esercitazioneEQS\\Doxygen\\results\\html")
-print(len(list))
+#list= getDotFiles("C:\\Users\\Assunta\\Desktop\\esercitazioneEQS\\Doxygen\\results\\html")
+#print(len(list))
