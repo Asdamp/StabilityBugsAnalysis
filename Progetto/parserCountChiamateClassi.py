@@ -33,19 +33,20 @@ def getDotFiles(path):
             if packageName:
                 methodName = re.search('\\l\w+(\.\w+)*"', line)
                 nodeName = re.search("Node\d+", line)
-                packageName = packageName.group().lstrip("label=\"").rstrip(".")
-                methodName = methodName.group().lstrip('l').rstrip("\"")
-                classe= packageName+"."+ methodName.split(".")[0]
-                nodeToPackage[nodeName.group()] = classe
+                if packageName:
+                    packageName = packageName.group().lstrip("label=\"").rstrip(".")
+
+                if methodName:
+                    methodName = methodName.group().lstrip('l').rstrip("\"")
+                    classe= packageName+"."+ methodName.split(".")[0]
+                if nodeName:
+                    nodeToPackage[nodeName.group()] = classe
             else:
                 tmp=re.findall("Node\d+", line)
                 if tmp:
                     assNodes.append(tmp)
         nodoChiamaList=getChiamate(nodoChiamaList,nodeToPackage,assNodes)
         #printParsedDot(nodeToPackage, assNodes)
-    for item in nodoChiamaList:
-       print(item)
-    print("*************")
     return nodoChiamaList
 
 #list= getDotFiles("C:\\Users\\Assunta\\Desktop\\esercitazioneEQS\\Doxygen\\results\\html")

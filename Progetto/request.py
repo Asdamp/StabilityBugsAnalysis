@@ -1,7 +1,7 @@
 import requests
 import parserVersionJira
 def getNumIssue(projectName,versionName):
-    url=""
+    url=projectName
     #mi resituisce tutte le versioni per quel progetto mi serve trovare l'id corrispondente per una cera versione
     r = requests.get(projectName+'/versions')
     for v in parserVersionJira.getAllVersions(str(r.json())):
