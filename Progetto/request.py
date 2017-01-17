@@ -1,26 +1,24 @@
 import requests
 import parserVersionJira
+
+#funzione che preso in ingresso l'url del progetto e il nome della versione di interesse
+#restituisce result, una lista di 4 valori contenenti:
+# numero di issueFixed, numero di issueAffected, numero di issueWithCustomFields e numero di issueUnresolved
 def getNumIssue(projectName,versionName):
     url=projectName
-    #mi resituisce tutte le versioni per quel progetto mi serve trovare l'id corrispondente per una cera versione
+    #richiesta GET per ottenere tutte le versioni
     r = requests.get(projectName+'/versions')
+    #ottengo tutte le versioni e cerco quella corrispondente a quella richiesta
+    #di questa prendo il campo self, ovvero l'url specifica per quella versione
     for v in parserVersionJira.getAllVersions(str(r.json())):
         if v.name==versionName:
-           print(v.name+"\t"+v.self+"\t"+v.id)
            url=v.self
-
-    #una volta trovato l'id o l'url completa dal getversions richiedo tutte le issue relative a quella versione
+    #utilizzando l'url ottenuta dalla ricerca precedente si esegue una nuova richiesta get per ottenere le relatedIssue
     r = requests.get(url+"/relatedIssueCounts")
-    result=parserVersionJira.parserNumIssue(str(r.json()))
-    print(result)
-    #result e' un array contenente il numero di issue chisue le issue affected e quele with custom fied
-
-    #faccio una nuova richiesta per ottenere tutte le issue unresolved per quella versione
+    result=parserVersionJira.parserNumIssue(str(r.json())) #result=[issueFixed, issueAffected, issueWithCustomFileds]
+    #si esegue una nuova richiesta per ottenere tutte le issue unresolved per quella versione
     r = requests.get(url + "/unresolvedIssueCount")
     unresolved=parserVersionJira.parseUnresolvedIssue(str(r.json()))
-    print(unresolved)
-    result.append(unresolved)
+    result.append(unresolved) #result=[issueFixed, issueAffected, issueWithCustomFileds, issueUnresolved]
     return(result)
-
-#print(getNumIssue("https://hibernate.atlassian.net/rest/api/2/project/HHH","5.2.5"))
 

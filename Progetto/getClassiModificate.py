@@ -1,9 +1,10 @@
 from filecmp import dircmp
 import os
 
+#funzione che dati in ingresso due percorsi restituisce il numero di classi differenti
 def count_class_mod(path, path2):
     #prendo tutti i file che NON sono di interesse della versione1
-    excludedFile1 = dotFiles = [os.path.join(root, name)
+    excludedFile1 = [os.path.join(root, name)
                     for root, dirs, files in os.walk(path)
                     for name in files
                     if not name.endswith(".java")
@@ -14,7 +15,7 @@ def count_class_mod(path, path2):
                      for name in files
                      if not name.endswith(".java")
                      ]
-    #elimino il pecorso, prelavndo solo il nome dei file
+    #elimino il pecorso, prelevando solo il nome dei file
     list1=[]
     list2=[]
     for file in excludedFile1:
@@ -31,16 +32,17 @@ def count_class_mod(path, path2):
     for file in excludedFile:
         str.append(file)
 
+    #si utilizza la funzione di libreria per fare la comparazione, ignorando i file che non sono di progetto
+    #precedentemente selezionati e presenti in str
     dcmp = dircmp(path,path2, ignore=str)
-
+    #invoco la funzione redircmp per realizzare il confronto file in tutte le sottodirectory
+    # e restituire il numero di file che differiscono
     return recdircmp(dcmp)
 
+#funzione che ricorsivamente confronta i file nelle sottodirectory
 def recdircmp(dcmp):
     len=0
     for sub_dcmp in dcmp.subdirs.values():
         len+=recdircmp(sub_dcmp)
     return dcmp.diff_files.__len__() + len
 
-#path="C:\\Users\\Antonio\\Desktop\\t\\wildfly-9.0.1.Final"
-#path2="C:\\Users\\Antonio\\Desktop\\t\\wildfly-10.1.0.Final"
-#print(count_class_mod(path, path2))
